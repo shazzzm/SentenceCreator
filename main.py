@@ -1,6 +1,13 @@
 import random
 import nltk
 
+def get_word_occurances_indices(words, current_word):
+    return [i for i, x in enumerate(words) if x == current_word]
+
+def get_next_possible_words(words, indices):
+    return [words[i+1] for i in indices]
+    
+
 # Open some Jane Austin!
 corpus_file = open("pg1342.txt", 'r')
 corpus_text = corpus_file.read()
@@ -25,10 +32,11 @@ outp_string = current_word
 
 for x in range(20):
     # Get all the indices of where this word occurs
-    indices = [i for i, x in enumerate(words) if x == current_word]
+    indices = get_word_occurances_indices(words, current_word)
 
     # Build a list of the words that occur after our chosen word
-    next_words = [x for i, x in enumerate(words)  if (i-1) in indices]
+    next_words = get_next_possible_words(words, indices)
+    
     # Pick a second word that occurs after this one
     next_word = r.sample(next_words, 1)[0]
     outp_string += " " + next_word
