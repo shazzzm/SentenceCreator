@@ -1,16 +1,25 @@
 import random
+import nltk
 
-# Open the corpus
+# Open some Jane Austin!
 corpus_file = open("pg1342.txt", 'r')
 corpus_text = corpus_file.read()
-#print(corpus_text)
+
+# Setup NLTK
+sentence_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+
+# Split our file into sentences
+sentences = sentence_tokenizer.tokenize(corpus_text)
+
+# Get the first word from each sentence
+sentence_start_words = [x.split(' ')[0] for x in sentences]
 
 # Split it into words
 words = corpus_text.split(' ')
 
 # Pick a random word
 r = random.Random()
-current_word = r.sample(words, 1)[0]
+current_word = r.sample(sentence_start_words, 1)[0]
 
 outp_string = current_word
 
@@ -25,5 +34,5 @@ for x in range(20):
     outp_string += " " + next_word
     current_word = next_word
 
-print outp_string.strip('\n')
+print(outp_string.strip('\r\n'))
 
