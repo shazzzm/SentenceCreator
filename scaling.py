@@ -22,12 +22,8 @@ def get_next_words_from_indices(indices, words):
 # Open some Jane Austin!
 corpus_file = open("pg1342.txt", 'r')
 corpus_text = corpus_file.read()
-print type(corpus_text)
 corpus_file = open("pg11.txt", 'r')
 corpus_text = corpus_text + corpus_file.read()
-print type(corpus_text)
-
-print len(corpus_text)
 
 # Setup NLTK
 sentence_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
