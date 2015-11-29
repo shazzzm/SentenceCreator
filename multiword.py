@@ -1,8 +1,26 @@
 import random
 import nltk
+import itertools
 
-def get_next_words(words, current_word):
-    return [words[i+1] for i,x in enumerate(words) if x == current_word]
+class WordLookup:
+    def _grouper(self, iterable, n, fillvalue=None):
+        args = [iter(iterable)] * n
+        return itertools.izip_longest(fillvalue=fillvalue, *args)
+    
+    def __init__(self, words):
+        self.word_lookup = {}
+        for (i1, word1), (i2, word2) in self._grouper(enumerate(words), 2):
+            temp_tuple = (word1, word2)
+            print i1, word1
+            print i2, word2
+            if temp_tuple in self.word_lookup:
+                self.word_lookup[temp_tuple].append(i1)
+            else:
+                self.word_lookup[word1] = [i1]
+        
+    def get_next_word_pair(self, word1, word2):
+        pass
+        
 
 # Open some Jane Austin!
 corpus_file = open("pg1342.txt", 'r')
@@ -19,6 +37,7 @@ sentence_start_words = [x.split(' ')[0] for x in sentences]
 
 # Split it into words
 words = corpus_text.split(' ')
+lookup = WordLookup(words)
 
 # Pick a random word
 r = random.Random()
