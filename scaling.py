@@ -1,5 +1,6 @@
 import random
 import nltk
+import sys
 
 def get_next_words(words, current_word):
     return [words[i+1] for i,x in enumerate(words) if x == current_word]
@@ -20,10 +21,14 @@ def get_next_words_from_indices(indices, words):
     return [words[x] for x in new_indices]
 
 # Open some Jane Austin!
-corpus_file = open("pg1342.txt", 'r')
-corpus_text = corpus_file.read()
 corpus_file = open("pg11.txt", 'r')
-corpus_text = corpus_text + corpus_file.read()
+corpus_text = corpus_file.read()
+corpus_file = open("pg1342.txt", 'r')
+corpus_text += corpus_file.read()
+
+# Stop some unicode errors
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 # Setup NLTK
 sentence_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
@@ -57,15 +62,14 @@ while True:
     # If there's no more words then stop
     if len(next_words) == 0:
         break
-    
+
     # Pick a second word that occurs after this one
     next_word = r.sample(next_words, 1)[0]
     outp_string += " " + next_word
     current_word = next_word
-    
+
     if current_word[-1] == '.' or current_word[-1] == '\n':
         break
-        
+
 
 print(outp_string.strip('\r\n'))
-
